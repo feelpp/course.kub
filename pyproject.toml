@@ -1,20 +1,21 @@
 [build-system]
-requires = ["scikit-build-core>=0.11", "pybind11"]
-build-backend = "scikit_build_core.build"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
 name = "kub-course"
 version = "0.1.0"
-description = "Librairie de simulation et visualisation KUB"
+description = "KUB Course and Simulation Lib"
 readme = "README.md"
-license = { file = "LICENSE" }
 authors = [
   { name = "Philippe Pinçon", email = "philippe.pincon@cemosis.fr" },
   { name = "Gwennolé Chappron", email = "gwennole.chappron@cemosis.fr" },
 ]
+
 requires-python = ">=3.9"
 classifiers = [
-  "Development Status :: 3 - Alpha",
+  "Development Status :: 4 - Beta",
+  "License :: OSI Approved :: MIT License",
   "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
@@ -33,46 +34,56 @@ dependencies = [
   "tabulate",
 ]
 
-[project.urls]
-Repository = "https://github.com/feelpp/kub-course"
-
 [project.optional-dependencies]
-test = [
-  "pytest",
-]
-dev = [
-  "pipx",
-  "build",
-  "ruff",
-]
+test = ["pytest"]
+dev = ["pipx", "build", "ruff"]
 
-[tool.scikit-build]
-wheel.packages = ["src/python/kub"]
-build.verbose = true
-logging.level = "INFO"
-sdist.cmake = false
-sdist.include = ["README.md"]
+# --- Configuration HATCHLING ---
+[tool.hatch.build.targets.wheel]
+packages = ["src/python/kub"]
 
 [tool.pytest.ini_options]
 minversion = "6.0"
 addopts = ["-ra", "--showlocals", "--strict-markers", "--strict-config"]
-testpaths = ["tests"]
+xfail_strict = true
 filterwarnings = [
+  "error",
+  "ignore:(ast.Str|Attribute s|ast.NameConstant|ast.Num) is deprecated:DeprecationWarning:_pytest",
   "ignore::DeprecationWarning",
 ]
 
 [tool.ruff]
 src = ["src/python"]
-line-length = 88
 
 [tool.ruff.lint]
 extend-select = [
-  "B", "I", "ARG", "C4", "EM", "ICN", "G",
-  "PGH","PIE","PL","PT","PTH","RET","RUF","SIM",
-  "T20","UP","YTT","EXE","NPY","PD"
+  "B",           # flake8-bugbear
+  "I",           # isort
+  "ARG",         # flake8-unused-arguments
+  "C4",          # flake8-comprehensions
+  "EM",          # flake8-errmsg
+  "ICN",         # flake8-import-conventions
+  "G",           # flake8-logging-format
+  "PGH",         # pygrep-hooks
+  "PIE",         # flake8-pie
+  "PL",          # pylint
+  "PT",          # flake8-pytest-style
+  "PTH",         # flake8-use-pathlib
+  "RET",         # flake8-return
+  "RUF",         # Ruff-specific
+  "SIM",         # flake8-simplify
+  "T20",         # flake8-print
+  "UP",          # pyupgrade
+  "YTT",         # flake8-2020
+  "EXE",         # flake8-executable
+  "NPY",         # NumPy specific rules
+  "PD",          # pandas-vet
 ]
-ignore = ["PLR"]
+ignore = [
+  "PLR",    # Design related pylint codes
+]
 isort.required-imports = ["from __future__ import annotations"]
 
 [tool.ruff.lint.per-file-ignores]
+"tests/**" = ["T20"]
 "*.ipynb" = ["T20"]
