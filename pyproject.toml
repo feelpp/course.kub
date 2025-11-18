@@ -1,0 +1,78 @@
+[build-system]
+requires = ["scikit-build-core>=0.11", "pybind11"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "kub-course"
+version = "0.1.0"
+description = "Librairie de simulation et visualisation KUB"
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [
+  { name = "Philippe Pinçon", email = "philippe.pincon@cemosis.fr" },
+  { name = "Gwennolé Chappron", email = "gwennole.chappron@cemosis.fr" },
+]
+requires-python = ">=3.9"
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+]
+
+dependencies = [
+  "platformdirs<4,>=2",
+  "pandas",
+  "fmpy",
+  "plotly",
+  "scipy",
+  "numpy",
+  "ipykernel",
+  "tabulate",
+]
+
+[project.urls]
+Repository = "https://github.com/feelpp/kub-course"
+
+[project.optional-dependencies]
+test = [
+  "pytest",
+]
+dev = [
+  "pipx",
+  "build",
+  "ruff",
+]
+
+[tool.scikit-build]
+wheel.packages = ["src/python/kub"]
+build.verbose = true
+logging.level = "INFO"
+sdist.cmake = false
+sdist.include = ["README.md"]
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = ["-ra", "--showlocals", "--strict-markers", "--strict-config"]
+testpaths = ["tests"]
+filterwarnings = [
+  "ignore::DeprecationWarning",
+]
+
+[tool.ruff]
+src = ["src/python"]
+line-length = 88
+
+[tool.ruff.lint]
+extend-select = [
+  "B", "I", "ARG", "C4", "EM", "ICN", "G",
+  "PGH","PIE","PL","PT","PTH","RET","RUF","SIM",
+  "T20","UP","YTT","EXE","NPY","PD"
+]
+ignore = ["PLR"]
+isort.required-imports = ["from __future__ import annotations"]
+
+[tool.ruff.lint.per-file-ignores]
+"*.ipynb" = ["T20"]
