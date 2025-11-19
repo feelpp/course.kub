@@ -16,9 +16,13 @@ class BasePlotFactory:
             "y_label": "Temperature (°C)",
             "conversion": lambda K: K - 273.15,  # Kelvin -> Celsius
         },
-        "heat_flux": {
+        "surface_heat_flux": {
             "y_label": "Heat Flux (W/m²)",
-            "conversion": lambda x: x,          # Identity
+            "conversion": lambda x: x,
+        },
+        "heat_flux": {
+            "y_label": "Heat Flux (W)",
+            "conversion": lambda x: x,
         },
         "solar_radiation": {
             "y_label": "Irradiance (W/m²)",
@@ -27,6 +31,10 @@ class BasePlotFactory:
         "energy": {
             "y_label": "Energy (kWh)",
             "conversion": lambda J: J / 3.6e6,  # Joules -> kWh
+        },
+        "relative_humidity": {
+            "y_label": "Relative Humidity (%)",
+            "conversion": lambda x: x
         }
     }
 
