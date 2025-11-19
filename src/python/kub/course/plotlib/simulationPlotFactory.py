@@ -27,9 +27,10 @@ class SimulationPlotFactory(BasePlotFactory):
             fig.add_trace(go.Scatter(x=time, y=y, mode="lines", name=label),
                           row=1, col=i)
             fig.update_yaxes(title_text=y_label, row=1, col=i)
+            fig.update_xaxes(title_text="Time (s)", row=1, col=i)
 
         # 4. Final Layout
-        fig.update_layout(width=400 * cols, title_text=title)
+        fig.update_layout(width=600 * cols, title_text=title)
         fig.show()
 
     def plot_multi_curves(self, time: np.ndarray, data_type: str, data_dict: Dict[str, np.ndarray], title: str):

@@ -30,12 +30,18 @@ class BasePlotFactory:
         }
     }
 
-    def _convert_data(self, data_type: str, data_dict: Dict[str, np.ndarray]):
+    def _convert_data(self, data_type: str, data_dict: Dict[str, Union[np.ndarray, list]]):
         """
         Helper: Applies conversion logic based on data_type.
         Returns converted data and the appropriate Y-axis label.
         """
         config = self.DATA_CONFIG.get(data_type.lower())
+
+        # Ensure all data are numpy arrays
+        prepared_data = {
+            label: np.array(data) if not isinstance(data, np.ndarray) else data
+            for label, data in data_dict.items()
+        }
 
         if config and "conversion" in config:
             converter = config["conversion"]

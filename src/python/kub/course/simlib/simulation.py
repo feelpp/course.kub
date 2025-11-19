@@ -3,6 +3,7 @@ from fmpy.fmi2 import FMU2Slave
 from enum import Enum, auto
 
 import threading
+import numpy as np
 
 class FMUState(Enum):
     CREATED = auto()
@@ -154,7 +155,7 @@ class FMUSimulation:
                 for name in outputs:
                     val = self.fmu.getReal([self.vrs[name]])[0]
                     data[name].append(val)
-        return data
+        return {key: np.array(value) for key, value in data.items()}
 
     def terminate(self):
         """
