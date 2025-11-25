@@ -35,8 +35,8 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-test = ["pytest"]
-dev = ["pipx", "build", "ruff"]
+test = ["pytest", "pytest-cov"]
+dev = ["pipx", "build", "ruff", "pre-commit", "mypy"]
 
 # --- Configuration HATCHLING ---
 [tool.hatch.build.targets.wheel]
@@ -50,6 +50,8 @@ filterwarnings = [
   "error",
   "ignore:(ast.Str|Attribute s|ast.NameConstant|ast.Num) is deprecated:DeprecationWarning:_pytest",
   "ignore::DeprecationWarning",
+  "ignore::ResourceWarning",
+  "ignore::pytest.PytestUnraisableExceptionWarning",
 ]
 
 [tool.ruff]
@@ -57,30 +59,30 @@ src = ["src/python"]
 
 [tool.ruff.lint]
 extend-select = [
-  "B",           # flake8-bugbear
-  "I",           # isort
-  "ARG",         # flake8-unused-arguments
-  "C4",          # flake8-comprehensions
-  "EM",          # flake8-errmsg
-  "ICN",         # flake8-import-conventions
-  "G",           # flake8-logging-format
-  "PGH",         # pygrep-hooks
-  "PIE",         # flake8-pie
-  "PL",          # pylint
-  "PT",          # flake8-pytest-style
-  "PTH",         # flake8-use-pathlib
-  "RET",         # flake8-return
-  "RUF",         # Ruff-specific
-  "SIM",         # flake8-simplify
-  "T20",         # flake8-print
-  "UP",          # pyupgrade
-  "YTT",         # flake8-2020
-  "EXE",         # flake8-executable
-  "NPY",         # NumPy specific rules
-  "PD",          # pandas-vet
+  "B",   # flake8-bugbear
+  "I",   # isort
+  "ARG", # flake8-unused-arguments
+  "C4",  # flake8-comprehensions
+  "EM",  # flake8-errmsg
+  "ICN", # flake8-import-conventions
+  "G",   # flake8-logging-format
+  "PGH", # pygrep-hooks
+  "PIE", # flake8-pie
+  "PL",  # pylint
+  "PT",  # flake8-pytest-style
+  "PTH", # flake8-use-pathlib
+  "RET", # flake8-return
+  "RUF", # Ruff-specific
+  "SIM", # flake8-simplify
+  "T20", # flake8-print
+  "UP",  # pyupgrade
+  "YTT", # flake8-2020
+  "EXE", # flake8-executable
+  "NPY", # NumPy specific rules
+  "PD",  # pandas-vet
 ]
 ignore = [
-  "PLR",    # Design related pylint codes
+  "PLR", # Design related pylint codes
 ]
 isort.required-imports = ["from __future__ import annotations"]
 
