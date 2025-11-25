@@ -21,7 +21,7 @@
                 "GitHub.copilot-chat"
             ],
             "settings": {
-                "python.defaultInterpreterPath": "/usr/local/bin/python",
+                "python.defaultInterpreterPath": "/usr/local/bin/python3",
                 "python.terminal.activateEnvironment": true,
                 "python.linting.enabled": true,
                 "python.linting.pylintEnabled": false,
@@ -48,9 +48,5 @@
         8888
     ],
     "postCreateCommand": "pip install -e '.[dev,test]'",
-    "remoteUser": "vscode",
-    "features": {
-        "ghcr.io/devcontainers/features/git:1": {},
-        "ghcr.io/devcontainers/features/github-cli:1": {}
-    }
+    "remoteUser": "vscode"
 }
