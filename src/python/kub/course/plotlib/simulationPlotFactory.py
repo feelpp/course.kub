@@ -32,14 +32,14 @@ class SimulationPlotFactory(BasePlotFactory):
     def plot_subplots(self, time: np.ndarray, data_type: str, data_dict: Dict[str, np.ndarray], title: str, show: bool = True):
         """
         Creates a figure with 1 row and N columns (one subplot per curve).
-        
+
         Args:
             time: Time array
             data_type: Type of data (temperature, heat_flux, etc.)
             data_dict: Dictionary of data arrays
             title: Plot title
             show: Whether to display the plot (default True)
-        
+
         Returns:
             Plotly figure object
         """
@@ -70,14 +70,14 @@ class SimulationPlotFactory(BasePlotFactory):
     def plot_multi_curves(self, time: np.ndarray, data_type: str, data_dict: Dict[str, np.ndarray], title: str, show: bool = True):
         """
         Plots all curves on a single chart.
-        
+
         Args:
             time: Time array
             data_type: Type of data (temperature, heat_flux, etc.)
             data_dict: Dictionary of data arrays
             title: Plot title
             show: Whether to display the plot (default True)
-        
+
         Returns:
             Plotly figure object
         """
