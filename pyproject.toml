@@ -36,8 +36,9 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-test = ["pytest"]
+test = ["pytest", "pytest-cov"]
 dev = ["pipx", "build", "ruff"]
+notebook = ["jupyter", "jupyterlab", "nbconvert"]
 
 # --- Configuration HATCHLING ---
 [tool.hatch.build.targets.wheel]
@@ -88,9 +89,9 @@ isort.required-imports = ["from __future__ import annotations"]
 [tool.ruff.lint.per-file-ignores]
 "tests/**" = ["T20"]
 "notebooks/**/*.ipynb" = [
-  "T20",     # Allow print statements in notebooks
-  "PD002",   # Allow inplace=True in notebooks (common pattern)
-  "ARG001",  # Allow unused function arguments (pedagogical placeholders)
-  "F841",    # Allow unused variables (student TODO exercises)
-  "RET504",  # Allow unnecessary assignment before return (clarity for students)
+  "T20",    # Allow print statements in notebooks
+  "PD002",  # Allow inplace=True in notebooks (common pattern)
+  "ARG001", # Allow unused function arguments (pedagogical placeholders)
+  "F841",   # Allow unused variables (student TODO exercises)
+  "RET504", # Allow unnecessary assignment before return (clarity for students)
 ]
