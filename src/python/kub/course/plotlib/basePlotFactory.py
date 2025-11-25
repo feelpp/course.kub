@@ -30,7 +30,7 @@ class BasePlotFactory:
         },
         "energy": {
             "y_label": "Energy (kWh)",
-            "conversion": lambda J: J / 3.6e6,  # Joules -> kWh
+            "conversion": lambda x: x ,
         },
         "relative_humidity": {
             "y_label": "Relative Humidity (%)",
@@ -71,6 +71,14 @@ class BasePlotFactory:
             yaxis_title=y_label,
             legend=dict(x=0, y=-0.2, orientation="h"),
             hovermode="x unified",
-            template="plotly_white"
+            template="plotly_white",
+            plot_bgcolor='white'
         )
+
+        # Grid (Y-axis)
+        fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor="#A9A9A9")
+
+        # Grid (X-axis)
+        fig.update_xaxes(showgrid=True, gridwidth=1, gridcolor="#A9A9A9")
+
         return fig
