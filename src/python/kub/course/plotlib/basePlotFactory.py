@@ -1,8 +1,9 @@
-import plotly.graph_objects as go
-from plotly.subplots import make_subplots
+from __future__ import annotations
+
+from typing import ClassVar
+
 import numpy as np
-import pandas as pd
-from typing import Dict, Union, Optional
+
 
 class BasePlotFactory:
     """
@@ -11,7 +12,7 @@ class BasePlotFactory:
     """
 
     # Configuration for data types, units, and conversions
-    DATA_CONFIG = {
+    DATA_CONFIG: ClassVar[dict] = {
         "temperature": {
             "y_label": "Temperature (°C)",
             "conversion": lambda K: K - 273.15,  # Kelvin -> Celsius
@@ -30,15 +31,15 @@ class BasePlotFactory:
         },
         "energy": {
             "y_label": "Energy (kWh)",
-            "conversion": lambda x: x ,
+            "conversion": lambda x: x,
         },
         "relative_humidity": {
             "y_label": "Relative Humidity (%)",
-            "conversion": lambda x: x
-        }
+            "conversion": lambda x: x,
+        },
     }
 
-    def _convert_data(self, data_type: str, data_dict: Dict[str, Union[np.ndarray, list]]):
+    def _convert_data(self, data_type: str, data_dict: dict[str, np.ndarray | list]):
         """
         Helper: Applies conversion logic based on data_type.
         Returns converted data and the appropriate Y-axis label.
@@ -46,7 +47,7 @@ class BasePlotFactory:
         config = self.DATA_CONFIG.get(data_type.lower())
 
         # Ensure all data are numpy arrays
-        prepared_data = {
+        converted_data = {
             label: np.array(data) if not isinstance(data, np.ndarray) else data
             for label, data in data_dict.items()
         }
@@ -69,15 +70,21 @@ class BasePlotFactory:
             title=title,
             xaxis_title=x_label,
             yaxis_title=y_label,
-            legend=dict(x=0, y=-0.2, orientation="h"),
+            legend={"x": 0, "y": -0.2, "orientation": "h"},
             hovermode="x unified",
             template="plotly_white",
-            plot_bgcolor='white'
+            plot_bgcolor="white",
         )
 
         # Grid (Y-axis)
-        fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor="#A9A9A9",
-                         zeroline=True, zerolinecolor="#7E7E7E", zerolinewidth=1)
+        fig.update_yaxes(
+            showgrid=True,
+            gridwidth=1,
+            gridcolor="#A9A9A9",
+            zeroline=True,
+            zerolinecolor="#7E7E7E",
+            zerolinewidth=1,
+        )
 
         # Grid (X-axis)
         fig.update_xaxes(showgrid=True, gridwidth=1, gridcolor="#A9A9A9")

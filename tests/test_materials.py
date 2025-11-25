@@ -1,10 +1,12 @@
 """Unit tests for material database."""
+
 from __future__ import annotations
 
 import pytest
+
 from kub.course.simlib.materials import (
-    structural_materials,
     insulation_materials,
+    structural_materials,
 )
 
 
@@ -44,12 +46,16 @@ class TestMaterialDatabase:
         # Structural materials: typically 0.1 to 5 W/(m·K)
         for name, material in structural_materials.items():
             lambda_val = material["lambda"]
-            assert 0.01 < lambda_val < 10, f"{name} has unrealistic lambda: {lambda_val}"
+            assert 0.01 < lambda_val < 10, (
+                f"{name} has unrealistic lambda: {lambda_val}"
+            )
 
         # Insulation materials: typically 0.01 to 0.1 W/(m·K)
         for name, material in insulation_materials.items():
             lambda_val = material["lambda"]
-            assert 0.01 < lambda_val < 0.2, f"{name} has unrealistic lambda: {lambda_val}"
+            assert 0.01 < lambda_val < 0.2, (
+                f"{name} has unrealistic lambda: {lambda_val}"
+            )
 
     def test_density_ranges(self):
         """Test that density values are physically reasonable."""
@@ -73,11 +79,14 @@ class TestMaterialDatabase:
                 assert isinstance(desc, str)
                 assert len(desc) > 0, f"{name} has empty description"
 
-    @pytest.mark.parametrize("material_name", [
-        "reinforced_concrete",
-        "glass_wool",
-        "oak_wood",
-    ])
+    @pytest.mark.parametrize(
+        "material_name",
+        [
+            "reinforced_concrete",
+            "glass_wool",
+            "oak_wood",
+        ],
+    )
     def test_specific_materials(self, material_name):
         """Test specific material properties."""
         if material_name in structural_materials:

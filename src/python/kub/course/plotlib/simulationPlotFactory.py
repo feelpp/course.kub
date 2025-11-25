@@ -1,8 +1,11 @@
-from kub.course.plotlib.basePlotFactory import BasePlotFactory
+from __future__ import annotations
+
+import numpy as np
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-import numpy as np
-from typing import Dict, Tuple
+
+from kub.course.plotlib.basePlotFactory import BasePlotFactory
+
 
 class SimulationPlotFactory(BasePlotFactory):
     """
@@ -10,7 +13,7 @@ class SimulationPlotFactory(BasePlotFactory):
     Input format: Dictionaries of Numpy Arrays.
     """
 
-    def _convert_time_unit(self, time_arr: np.ndarray) -> Tuple[np.ndarray, str]:
+    def _convert_time_unit(self, time_arr: np.ndarray) -> tuple[np.ndarray, str]:
         """
         Internal helper to convert time into Hours or Days if the simulation is long enough.
 
@@ -24,12 +27,18 @@ class SimulationPlotFactory(BasePlotFactory):
 
         if max_time >= 172800:
             return time_arr / 86400.0, "Time (days)"
-        elif max_time > 3600:
+        if max_time > 3600:
             return time_arr / 3600.0, "Time (h)"
-        else:
-            return time_arr, "Time (s)"
+        return time_arr, "Time (s)"
 
-    def plot_subplots(self, time: np.ndarray, data_type: str, data_dict: Dict[str, np.ndarray], title: str, show: bool = True):
+    def plot_subplots(
+        self,
+        time: np.ndarray,
+        data_type: str,
+        data_dict: dict[str, np.ndarray],
+        title: str,
+        show: bool = True,
+    ):
         """
         Creates a figure with 1 row and N columns (one subplot per curve).
 
@@ -51,13 +60,15 @@ class SimulationPlotFactory(BasePlotFactory):
 
         # Setup Subplots
         cols = len(y_data)
-        fig = make_subplots(rows=1, cols=cols, shared_xaxes=True,
-                            subplot_titles=list(y_data.keys()))
+        fig = make_subplots(
+            rows=1, cols=cols, shared_xaxes=True, subplot_titles=list(y_data.keys())
+        )
 
         # Add Traces
         for i, (label, y) in enumerate(y_data.items(), start=1):
-            fig.add_trace(go.Scatter(x=x_vals, y=y, mode="lines", name=label),
-                          row=1, col=i)
+            fig.add_trace(
+                go.Scatter(x=x_vals, y=y, mode="lines", name=label), row=1, col=i
+            )
             fig.update_yaxes(title_text=y_label, row=1, col=i)
             fig.update_xaxes(title_text=x_label, row=1, col=i)
 
@@ -67,7 +78,14 @@ class SimulationPlotFactory(BasePlotFactory):
             fig.show()
         return fig
 
-    def plot_multi_curves(self, time: np.ndarray, data_type: str, data_dict: Dict[str, np.ndarray], title: str, show: bool = True):
+    def plot_multi_curves(
+        self,
+        time: np.ndarray,
+        data_type: str,
+        data_dict: dict[str, np.ndarray],
+        title: str,
+        show: bool = True,
+    ):
         """
         Plots all curves on a single chart.
 

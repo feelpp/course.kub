@@ -1,8 +1,10 @@
 """Unit tests for plotting factories."""
+
 from __future__ import annotations
 
-import pytest
 import numpy as np
+import pytest
+
 from kub.course.plotlib import SimulationPlotFactory
 
 
@@ -69,14 +71,17 @@ class TestSimulationPlotFactory:
             show=False,  # Don't display in headless test environment
         )
         assert fig is not None
-        assert hasattr(fig, 'data')
+        assert hasattr(fig, "data")
         assert len(fig.data) > 0
 
-    @pytest.mark.parametrize("data_type,expected_label", [
-        ("temperature", "Temperature (°C)"),
-        ("heat_flux", "Heat Flux (W)"),
-        ("solar_radiation", "Irradiance (W/m²)"),
-    ])
+    @pytest.mark.parametrize(
+        ("data_type", "expected_label"),
+        [
+            ("temperature", "Temperature (°C)"),
+            ("heat_flux", "Heat Flux (W)"),
+            ("solar_radiation", "Irradiance (W/m²)"),
+        ],
+    )
     def test_data_type_labels(self, factory, data_type, expected_label):
         """Test that different data types have correct labels."""
         config = factory.DATA_CONFIG.get(data_type)

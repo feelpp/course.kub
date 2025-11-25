@@ -88,4 +88,4 @@ isort.required-imports = ["from __future__ import annotations"]
 
 [tool.ruff.lint.per-file-ignores]
 "tests/**" = ["T20"]
-"*.ipynb" = ["T20"]
+"*.ipynb" = ["T20", "PD002", "ARG001", "F841", "RET504", "EM102"]
