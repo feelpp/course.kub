@@ -6,10 +6,17 @@ FROM mcr.microsoft.com/devcontainers/python:3.12
 # Install additional system dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Python dependencies
-RUN pip install --no-cache-dir \
+# Install uv for fast Python package management
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
+
+# Set environment variables for uv
+ENV UV_SYSTEM_PYTHON=1
+
+# Install Python dependencies using uv (10-100x faster than pip)
+RUN uv pip install --system \
     fmpy \
     pandas \
     plotly \

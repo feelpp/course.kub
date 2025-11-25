@@ -139,6 +139,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - **Philippe Pinçon** - philippe.pincon@cemosis.fr
 - **Gwennolé Chappron** - gwennole.chappron@cemosis.fr
+- **Christophe Prud'homme** - christophe.prudhomme@cemosis.fr
 
 ## Acknowledgments
 
