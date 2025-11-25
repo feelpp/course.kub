@@ -37,6 +37,7 @@ dependencies = [
 [project.optional-dependencies]
 test = ["pytest", "pytest-cov"]
 dev = ["pipx", "build", "ruff", "pre-commit", "mypy"]
+notebook = ["nbconvert", "nbformat"]
 
 # --- Configuration HATCHLING ---
 [tool.hatch.build.targets.wheel]

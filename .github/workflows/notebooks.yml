@@ -26,17 +26,19 @@ jobs:
           enable-cache: true
 
       - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
+        run: uv python install 3.11
+
+      - name: Create virtual environment
+        run: uv venv
 
       - name: Install dependencies
         run: |
-          uv pip install --system -e '.[dev,test]'
-          uv pip install --system nbconvert nbformat
+          source .venv/bin/activate
+          uv pip install -e '.[dev,test,notebook]'
 
       - name: Execute notebooks
         run: |
+          source .venv/bin/activate
           for notebook in notebooks/**/*.ipynb; do
             echo "Testing $notebook"
             jupyter nbconvert --to notebook --execute "$notebook" --output /tmp/test.ipynb
