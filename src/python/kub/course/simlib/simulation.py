@@ -1,9 +1,12 @@
-from fmpy import extract, read_model_description
-from fmpy.fmi2 import FMU2Slave
-from enum import Enum, auto
+from __future__ import annotations
 
 import threading
+from enum import Enum, auto
+
 import numpy as np
+from fmpy import extract, read_model_description
+from fmpy.fmi2 import FMU2Slave
+
 
 class FMUState(Enum):
     CREATED = auto()
@@ -12,6 +15,7 @@ class FMUState(Enum):
     INITIALIZED = auto()
     SIMULATION = auto()
     TERMINATED = auto()
+
 
 class FMUSimulation:
     """
@@ -37,22 +41,28 @@ class FMUSimulation:
             guid=self.model_description.guid,
             unzipDirectory=self.unzip_dir,
             modelIdentifier=self.model_description.coSimulation.modelIdentifier,
-            instanceName="instance"
+            instanceName="instance",
         )
 
         with self.lock:
             self.fmu.instantiate()
             self.state = FMUState.INSTANTIATED
 
-        self.vrs = {var.name: var.valueReference for var in self.model_description.modelVariables}
+        self.vrs = {
+            var.name: var.valueReference
+            for var in self.model_description.modelVariables
+        }
 
     def require_state(self, expected: FMUState, method: str):
         """
         Checks that the current FMU state (self.state) is the required expected state before a method can proceed.
         """
         if self.state != expected:
-            raise RuntimeError(f"{method}() requires FMU state {expected.name}, "
-                               f"but state is {self.state.name}" )
+            msg = (
+                f"{method}() requires FMU state {expected.name}, "
+                f"but state is {self.state.name}"
+            )
+            raise RuntimeError(msg)
 
     def set(self, inputDic: dict):
         """
@@ -60,7 +70,8 @@ class FMUSimulation:
         """
         for name, value in inputDic.items():
             if name not in self.vrs:
-                raise KeyError(f"Variable '{name}' not found in FMU.")
+                msg = f"Variable '{name}' not found in FMU."
+                raise KeyError(msg)
 
             vr = self.vrs[name]
             # var = self.model_description.get_variable(name)
@@ -74,14 +85,14 @@ class FMUSimulation:
             elif isinstance(value, str):
                 self.fmu.setString([vr], [str(value)])
             else:
-                raise TypeError(f"Unsupported variable type for '{name}'.")
+                msg = f"Unsupported variable type for '{name}'."
+                raise TypeError(msg)
 
     def get(self, name):
         """
         Retrieves the Real value (as a float) of the specified output variable by name.
         """
-        val = self.fmu.getReal([self.vrs[name]])[0]
-        return val
+        return self.fmu.getReal([self.vrs[name]])[0]
 
     def initialize(self, startTime=0.0, stopTime=3600.0, timeStep=1.0):
         """
@@ -148,7 +159,9 @@ class FMUSimulation:
 
         with self.lock:
             while time < self.stop:
-                self.fmu.doStep(currentCommunicationPoint=time, communicationStepSize=self.step)
+                self.fmu.doStep(
+                    currentCommunicationPoint=time, communicationStepSize=self.step
+                )
                 time += self.step
                 data["time"].append(time)
 

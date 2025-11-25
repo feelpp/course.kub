@@ -1,0 +1,43 @@
+name: Notebooks Test
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - 'notebooks/**'
+      - 'src/**'
+  pull_request:
+    paths:
+      - 'notebooks/**'
+      - 'src/**'
+  workflow_dispatch:
+
+jobs:
+  test-notebooks:
+    name: Test Jupyter Notebooks
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          uv pip install --system -e '.[dev,test]'
+          uv pip install --system nbconvert nbformat
+
+      - name: Execute notebooks
+        run: |
+          for notebook in notebooks/**/*.ipynb; do
+            echo "Testing $notebook"
+            jupyter nbconvert --to notebook --execute "$notebook" --output /tmp/test.ipynb
+          done
