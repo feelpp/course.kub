@@ -76,7 +76,8 @@ class BasePlotFactory:
         )
 
         # Grid (Y-axis)
-        fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor="#A9A9A9")
+        fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor="#A9A9A9",
+                         zeroline=True, zerolinecolor="#7E7E7E", zerolinewidth=1)
 
         # Grid (X-axis)
         fig.update_xaxes(showgrid=True, gridwidth=1, gridcolor="#A9A9A9")
