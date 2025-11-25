@@ -29,9 +29,19 @@ class SimulationPlotFactory(BasePlotFactory):
         else:
             return time_arr, "Time (s)"
 
-    def plot_subplots(self, time: np.ndarray, data_type: str, data_dict: Dict[str, np.ndarray], title: str):
+    def plot_subplots(self, time: np.ndarray, data_type: str, data_dict: Dict[str, np.ndarray], title: str, show: bool = True):
         """
         Creates a figure with 1 row and N columns (one subplot per curve).
+        
+        Args:
+            time: Time array
+            data_type: Type of data (temperature, heat_flux, etc.)
+            data_dict: Dictionary of data arrays
+            title: Plot title
+            show: Whether to display the plot (default True)
+        
+        Returns:
+            Plotly figure object
         """
         # Convert Data
         y_data, y_label = self._convert_data(data_type, data_dict)
@@ -53,11 +63,23 @@ class SimulationPlotFactory(BasePlotFactory):
 
         # Final Layout
         fig.update_layout(width=600 * cols, title_text=title)
-        fig.show()
+        if show:
+            fig.show()
+        return fig
 
-    def plot_multi_curves(self, time: np.ndarray, data_type: str, data_dict: Dict[str, np.ndarray], title: str):
+    def plot_multi_curves(self, time: np.ndarray, data_type: str, data_dict: Dict[str, np.ndarray], title: str, show: bool = True):
         """
         Plots all curves on a single chart.
+        
+        Args:
+            time: Time array
+            data_type: Type of data (temperature, heat_flux, etc.)
+            data_dict: Dictionary of data arrays
+            title: Plot title
+            show: Whether to display the plot (default True)
+        
+        Returns:
+            Plotly figure object
         """
         # Convert Data
         y_data, y_label = self._convert_data(data_type, data_dict)
@@ -72,4 +94,6 @@ class SimulationPlotFactory(BasePlotFactory):
 
         # Final Layout
         self._apply_common_layout(fig, title, y_label, x_label=x_label)
-        fig.show()
+        if show:
+            fig.show()
+        return fig
