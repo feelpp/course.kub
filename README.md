@@ -1,6 +1,7 @@
 # KUB Course - Building Energy Simulation
 
 [![CI](https://github.com/feelpp/course.kub/workflows/CI/badge.svg)](https://github.com/feelpp/course.kub/actions)
+[![Release](https://img.shields.io/github/v/release/feelpp/course.kub)](https://github.com/feelpp/course.kub/releases)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
