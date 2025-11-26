@@ -127,7 +127,7 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
 
           # Check if prerelease (contains .alpha.*, .beta.*, .rc.* or not on main branch)
-          if [[ "$VERSION" =~ \.(alpha|beta|rc)\. ]] || [[ "${{ github.ref }}" != "refs/heads/main" && "${{ github.event_name }}" != "push" ]]; then
+          if [[ "$VERSION" =~ [.-](alpha|beta|rc)[.-] ]] || [[ "${{ github.ref }}" != "refs/heads/main" && "${{ github.event_name }}" != "push" ]]; then
             echo "PRERELEASE=true" >> $GITHUB_OUTPUT
             echo "RELEASE_NAME=PreRelease v$VERSION" >> $GITHUB_OUTPUT
           else
