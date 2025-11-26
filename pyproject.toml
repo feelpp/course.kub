@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "kub-course"
-version = "0.1.0"
+version = "0.90-rc.1"
 description = "KUB Course and Simulation Lib"
 readme = "README.md"
 authors = [
