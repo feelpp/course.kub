@@ -3,9 +3,9 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "kub-course"
-version = "0.1.0"
-description = "KUB Course and Simulation Lib"
+name = "ktirio-ub-course"
+version = "1.0.0-rc.1"
+description = "Ktirio Urban Building Course and Simulation Library"
 readme = "README.md"
 authors = [
   { name = "Philippe Pinçon", email = "philippe.pincon@cemosis.fr" },
