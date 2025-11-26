@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from kub.course.simlib.materials import (
+from ktirio.ub.course.simlib.materials import (
     insulation_materials,
     structural_materials,
 )

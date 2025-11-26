@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from kub.course.simlib import FMUSimulation, FMUState
+from ktirio.ub.course.simlib import FMUSimulation, FMUState
 
 
 class TestFMUSimulation:

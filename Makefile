@@ -61,7 +61,7 @@ dev-setup:  ## Complete development setup
 	@echo "Run 'make help' to see available commands"
 
 docker-build:  ## Build Docker container
-	docker build -f .devcontainer/Dockerfile -t kub-course:latest .
+	docker build -f .devcontainer/Dockerfile -t ktirio-ub-course:latest .
 
 docker-run:  ## Run Docker container
-	docker run -it --rm -v $(PWD):/workspace -p 8888:8888 kub-course:latest
+	docker run -it --rm -v $(PWD):/workspace -p 8888:8888 ktirio-ub-course:latest

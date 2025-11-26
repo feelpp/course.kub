@@ -45,8 +45,8 @@ pip install -e '.[dev,test]'
 ### Basic Usage
 
 ```python
-from kub.course.simlib import FMUSimulation
-from kub.course.plotlib import SimulationPlotFactory
+from ktirio.ub.course.simlib import FMUSimulation
+from ktirio.ub.course.plotlib import SimulationPlotFactory
 from pathlib import Path
 
 # Load and run an FMU simulation
@@ -75,7 +75,7 @@ factory.plot_subplots(
 ### Material Database
 
 ```python
-from kub.course.simlib.materials import insulation_materials, structural_materials
+from ktirio.ub.course.simlib.materials import insulation_materials, structural_materials
 
 # Access thermal properties
 glass_wool = insulation_materials["glass_wool"]
@@ -88,19 +88,19 @@ print(f"Specific heat: {glass_wool['Cp']} J/(kg·K)")
 
 ```
 course.kub/
-├── .devcontainer/          # Development container configuration
-├── .github/workflows/      # CI/CD pipelines
-├── .vscode/                # VS Code settings
-├── database/               # FMU files and data
-│   ├── day1/              # Day 1 exercises (conduction, radiation)
-│   └── day2/              # Day 2 exercises (optimization, weather)
-├── notebooks/              # Jupyter training notebooks
-│   ├── trainingDay1/      # Basic physics exercises
-│   └── trainingDay2/      # Advanced case studies
-├── src/python/kub/course/ # Main package
-│   ├── plotlib/           # Visualization utilities
-│   └── simlib/            # Simulation and materials
-└── tests/                  # Unit tests (coming soon)
+├── .devcontainer/               # Development container configuration
+├── .github/workflows/           # CI/CD pipelines
+├── .vscode/                     # VS Code settings
+├── database/                    # FMU files and data
+│   ├── day1/                   # Day 1 exercises (conduction, radiation)
+│   └── day2/                   # Day 2 exercises (optimization, weather)
+├── notebooks/                   # Jupyter training notebooks
+│   ├── trainingDay1/           # Basic physics exercises
+│   └── trainingDay2/           # Advanced case studies
+├── src/python/ktirio/ub/course/ # Main package
+│   ├── plotlib/                # Visualization utilities
+│   └── simlib/                 # Simulation and materials
+└── tests/                       # Unit tests
 ```
 
 ## Development
@@ -108,8 +108,8 @@ course.kub/
 ### Running Tests
 
 ```bash
-pytest                                    # Run all tests
-pytest --cov=kub --cov-report=html       # With coverage report
+pytest                                           # Run all tests
+pytest --cov=ktirio.ub.course --cov-report=html # With coverage report
 ```
 
 ### Code Quality
@@ -126,6 +126,44 @@ ruff check --fix .                       # Auto-fix issues
 python -m build
 pip install dist/*.whl
 ```
+
+### Creating a Release
+
+This project uses semantic versioning and automated releases via GitHub Actions.
+
+**For stable releases:**
+
+```bash
+# Update version in pyproject.toml to match the release version
+# Commit your changes
+git add pyproject.toml
+git commit -m "Bump version to 1.0.0"
+git push origin main
+
+# Create and push a version tag
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+**For prereleases (alpha, beta, rc):**
+
+```bash
+# Use semver prerelease format
+git tag v1.0.0-beta.1
+git push origin v1.0.0-beta.1
+
+# Or tag from a feature branch (automatically marked as prerelease)
+git checkout develop
+git tag v1.1.0-rc.1
+git push origin v1.1.0-rc.1
+```
+
+The CI workflow will automatically:
+- Run all tests and quality checks
+- Build the package (wheel and sdist)
+- Create a GitHub release with distribution files
+- Mark as prerelease if the version contains `.alpha.`, `.beta.`, `.rc.`, or if tagged from a non-main branch
+- Generate release notes from commits and PRs
 
 ## Contributing
 

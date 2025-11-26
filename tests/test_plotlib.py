@@ -5,7 +5,7 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
-from kub.course.plotlib import SimulationPlotFactory
+from ktirio.ub.course.plotlib import SimulationPlotFactory
 
 
 class TestSimulationPlotFactory:
